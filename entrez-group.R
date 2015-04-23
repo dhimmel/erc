@@ -18,13 +18,18 @@ entrez.df <- erc.df %>%
   dplyr::ungroup()
 
 # write entrez gene values to disk
-gz <- file.path('data', 'erc_mam33-entrez.tsv.gz') %>%
-  gzfile('w')
+write.gz.tsv <- function(df, path) {
+  gz <- gzfile(path, 'w')
+  write.table(df, gz, sep='\t', quote=FALSE, row.names=FALSE)
+  close(gz)
+}
 
+write.gz.tsv(entrez.df, file.path('data', 'erc_mam33-entrez.tsv.gz'))
+
+# write gene pairs with ERC >= 0.6
 entrez.df %>%
-  write.table(gz, sep='\t', quote=FALSE, row.names=FALSE)
-
-close(gz)
+  dplyr::filter(correlation >= 0.6) %>%
+  write.gz.tsv(file.path('data', 'erc_mam33-entrez-gt-0.6.tsv.gz'))
 
 # plot ERC values
 gg.erc <- entrez.df %>%
