@@ -44,7 +44,7 @@ sign.df <- entrez.df %>%
 gg.sign <- sign.df %>%
   ggplot(aes(x = correlation)) +
   geom_histogram(aes(fill = sign), binwidth=0.01, alpha=0.9, position="fill") +
-  xlab('Evolutionary Rate Covariation Value') + ylab('Percent') + 
+  xlab('Evolutionary Rate Covariation Value') + ylab('Probability') + 
   theme_bw() + theme(plot.margin = grid::unit(c(2, 2, 2, 2), 'points')) + 
   theme(legend.justification=c(1, 1), legend.position=c(1, 1))
 
